@@ -69,6 +69,7 @@ class VersionPage : public QMainWindow, public BasePage {
    private slots:
     void on_actionChange_version_triggered();
     void on_actionInstall_Forge_triggered();
+    void on_actionInstall_NeoForge_triggered();
     void on_actionInstall_Fabric_triggered();
     void on_actionInstall_Quilt_triggered();
     void on_actionAdd_Empty_triggered();

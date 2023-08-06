@@ -80,6 +80,10 @@ void PackInstallTask::copySettings()
                 components->setComponentVersion("org.quiltmc.quilt-loader", m_pack.version, true);
                 break;
             }
+            case ResourceAPI::NeoForge: {
+                components->setComponentVersion("net.neoforged", m_pack.version, true);
+                break;
+            }
             case ResourceAPI::Cauldron:
                 break;
             case ResourceAPI::LiteLoader:

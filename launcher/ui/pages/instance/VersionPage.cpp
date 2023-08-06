@@ -393,7 +393,10 @@ void VersionPage::on_actionChange_version_triggered()
     if (uid == "net.minecraftforge") {
         on_actionInstall_Forge_triggered();
         return;
-    } else if (uid == "com.mumfrey.liteloader") {
+    } else if (uid == "net.neoforged") {
+        on_actionInstall_NeoForge_triggered();
+        return;
+    }else if (uid == "com.mumfrey.liteloader") {
         on_actionInstall_LiteLoader_triggered();
         return;
     }
@@ -463,6 +466,33 @@ void VersionPage::on_actionInstall_Forge_triggered()
     if (vselect.exec() && vselect.selectedVersion()) {
         auto vsn = vselect.selectedVersion();
         m_profile->setComponentVersion("net.minecraftforge", vsn->descriptor());
+        m_profile->resolve(Net::Mode::Online);
+        // m_profile->installVersion();
+        preselect(m_profile->rowCount(QModelIndex()) - 1);
+        m_container->refreshContainer();
+    }
+}
+
+void VersionPage::on_actionInstall_NeoForge_triggered()
+{
+    auto vlist = APPLICATION->metadataIndex()->get("net.neoforged");
+    if (!vlist) {
+        return;
+    }
+    VersionSelectDialog vselect(vlist.get(), tr("Select NeoForge version"), this);
+    vselect.setExactFilter(BaseVersionList::ParentVersionRole, m_profile->getComponentVersion("net.minecraft"));
+    vselect.setEmptyString(tr("No NeoForge versions are currently available for Minecraft ") +
+                           m_profile->getComponentVersion("net.minecraft"));
+    vselect.setEmptyErrorString(tr("Couldn't load or download the NeoForge version lists!"));
+
+    auto currentVersion = m_profile->getComponentVersion("net.neoforged");
+    if (!currentVersion.isEmpty()) {
+        vselect.setCurrentVersion(currentVersion);
+    }
+
+    if (vselect.exec() && vselect.selectedVersion()) {
+        auto vsn = vselect.selectedVersion();
+        m_profile->setComponentVersion("net.neoforged", vsn->descriptor());
         m_profile->resolve(Net::Mode::Online);
         // m_profile->installVersion();
         preselect(m_profile->rowCount(QModelIndex()) - 1);

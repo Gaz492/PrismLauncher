@@ -361,6 +361,10 @@ bool FlameCreationTask::createInstance()
             id.remove("quilt-");
             loaderType = "quilt";
             loaderUid = "org.quiltmc.quilt-loader";
+        } else if (id.startsWith("neoforge-")) {
+            id.remove("neoforge-");
+            loaderType = "neoforge";
+            loaderUid = "net.neoforged";
         } else {
             logWarning(tr("Unknown mod loader in manifest: %1").arg(id));
             continue;

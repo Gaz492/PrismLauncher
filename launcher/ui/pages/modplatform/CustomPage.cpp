@@ -63,6 +63,7 @@ CustomPage::CustomPage(NewInstanceDialog* dialog, QWidget* parent) : QWidget(par
     connect(ui->loaderVersionList, &VersionSelectWidget::selectedVersionChanged, this, &CustomPage::setSelectedLoaderVersion);
     connect(ui->noneFilter, &QRadioButton::toggled, this, &CustomPage::loaderFilterChanged);
     connect(ui->forgeFilter, &QRadioButton::toggled, this, &CustomPage::loaderFilterChanged);
+    connect(ui->neoForgeFilter, &QRadioButton::toggled, this, &CustomPage::loaderFilterChanged);
     connect(ui->fabricFilter, &QRadioButton::toggled, this, &CustomPage::loaderFilterChanged);
     connect(ui->quiltFilter, &QRadioButton::toggled, this, &CustomPage::loaderFilterChanged);
     connect(ui->liteLoaderFilter, &QRadioButton::toggled, this, &CustomPage::loaderFilterChanged);
@@ -130,6 +131,9 @@ void CustomPage::loaderFilterChanged()
     } else if (ui->forgeFilter->isChecked()) {
         ui->loaderVersionList->setExactFilter(BaseVersionList::ParentVersionRole, minecraftVersion);
         m_selectedLoader = "net.minecraftforge";
+    } else if (ui->neoForgeFilter->isChecked()) {
+        ui->loaderVersionList->setExactFilter(BaseVersionList::ParentVersionRole, minecraftVersion);
+        m_selectedLoader = "net.neoforged";
     } else if (ui->fabricFilter->isChecked()) {
         // FIXME: dirty hack because the launcher is unaware of Fabric's dependencies
         if (Version(minecraftVersion) >= Version("1.14"))  // Fabric/Quilt supported

@@ -269,7 +269,7 @@ bool CoreModFolderPage::shouldDisplay() const
 
         if (!version)
             return true;
-        if (!version->getComponent("net.minecraftforge"))
+        if (!(version->getComponent("net.minecraftforge") || version->getComponent("net.neoforged")))
             return false;
         if (!version->getComponent("net.minecraft"))
             return false;
